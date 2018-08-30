@@ -49,7 +49,7 @@ bool IsStrong(string s)
 	}
 	}*/
 
-	vector<string> svec1{ "[\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\_\\-\\=\\+\\[\\]\\{\\}\\,\\.\\<\\>\\/\\?]","[[:alnum:]]","[[:alpha:]]" };
+	vector<string> svec1{ "[-!@#$%^&*()_=+[]{},.<>/?]","[[:alnum:]]","[[:alpha:]]" };
 	for (auto &tmp : svec1)
 	{
 		regex r(tmp, regex::icase);
