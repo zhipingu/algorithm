@@ -73,9 +73,9 @@ private:
 	void reallocate();
 	pair<string *, string *> alloc_and_copy(const string*, const string *);
 	static allocator<string> alloc;
-	string *element;//Ö¸Ïò³õÊ¼»¯ÇÒ¹¹ÔìÄÚ´æµÄÊ×ÔªËØ
-	string *first_free;//Ö¸Ïò×îºóÒ»¸ö¹¹ÔìÄÚ´æÖ®ºóµÄÏÂÒ»Î»ÖÃ
-	string *cap;//Ö¸Ïò·ÖÅäµÄÄÚ´æÄ©Î²Ö®ºóµÄÎ»ÖÃ
+	string *element;//æŒ‡å‘åˆå§‹åŒ–ä¸”æ„é€ å†…å­˜çš„é¦–å…ƒç´ 
+	string *first_free;//æŒ‡å‘æœ€åä¸€ä¸ªæ„é€ å†…å­˜ä¹‹åçš„ä¸‹ä¸€ä½ç½®
+	string *cap;//æŒ‡å‘åˆ†é…çš„å†…å­˜æœ«å°¾ä¹‹åçš„ä½ç½®
 };
 allocator<string> StrVec::alloc;
 void StrVec::push_back(const string &s)
