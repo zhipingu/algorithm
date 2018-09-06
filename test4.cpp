@@ -2,40 +2,64 @@
 //
 
 #include "stdafx.h"
-#include<stdio.h>
-#include<stdlib.h>
+#include<iostream>  
+using namespace std;
 
-int main(int argc, const char *argv[])
-{/*
-	FILE *src = NULL, *dest = NULL;
-	int ch = 0;
-	if ((src = fopen(argv[1], "r")) == NULL)
+class Point
+{
+public:
+	Point()
 	{
-		perror("file aaa");
-		exit(1);
+		x = 0;
+		y = 0;
+		counter++;
 	}
-	if ((dest = fopen(argv[2], "w")) == NULL)
+	~Point()
 	{
-		perror("file bbb");
-		exit(1);
+		counter--;
 	}
-	while ((ch = fgetc(src)) != EOF)
-		fputc(ch, dest);
-	fclose(src);
-	fclose(dest);
-*/
-	int a[] = { 2,3,4,5,6 };
-	int *p = (int *)malloc(sizeof(int));
-	printf("%p\n",p );
-	printf("%p\n", p);
-	*p = 567;
-	int i = 0;
-	int sum = 0;
-	for (; i < 10; i++)
+	Point(float x, float y)
 	{
-		sum += i;
+		this->x = x;
+		this->y = y;
+		counter++;
 	}
-	free(p);
+	void move(float x, float y)
+	{
+		this->x = x;
+		this->y = y;
+	}
+	float getX()
+	{
+		return x;
+	}
+	float getY()
+	{
+		return y;
+	}
+
+public:
+	static int counter;
+private:
+	float x, y;
+};
+
+int Point::counter = 0;
+
+int main()
+{
+	Point *p1 = new Point(1, 1);
+	Point *p2 = new Point(2, 2);
+	Point *p3 = new Point(3, 3);
+
+	cout << "已创建的点数是:" << Point::counter << endl;
+
+	delete p1;
+	delete p2;
+	delete p3;
+
+	cout << Point::counter << endl;
+
+	system("pause");
 	return 0;
-
 }

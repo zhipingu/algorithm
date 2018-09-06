@@ -1,61 +1,87 @@
+// test1.cpp : Defines the entry point for the console application.
+//
 
 #include "stdafx.h"
-//#include<vld.h>
-#include<fstream>
-#include<memory>
+#include<io.h>
 #include<string>
-#include<algorithm>  
-#include<vector>  
-#include<utility>
-#include<iostream>  
+#include<vector>
+#include<regex>
+#include<iostream>
 
 using namespace std;
 
-class A
+void getfile(string filepath, vector<string> &files)
 {
-private:
-	int x;
-	int y;
-public:
-	A(int a,int b):x(a),y(b)
+	struct _finddata_t fileinfo;
+	auto handle = _findfirst(string(filepath).append("\\*").c_str(), &fileinfo);
+	if (handle == -1)
 	{
+		perror("_findfirst fail");
+		exit(1);
 	}
-	A() = default;
-	virtual void fun4() {}
-	virtual void print()
+	do
 	{
-		cout << "x=" << x << endl << "y=" << y << endl;
-	}
-};
+		if (fileinfo.attrib & _A_SUBDIR)
+		{
+			//cout << string(filepath) + "\\" + string(fileinfo.name) + "\\*" << endl;
+			if (strcmp(fileinfo.name, ".") != 0 && strcmp(fileinfo.name, "..") != 0)
+				getfile(string(filepath) + "\\" + string(fileinfo.name), files);
+		}
+		else
+			files.push_back(string(filepath) + "\\" + fileinfo.name);
+	} while (_findnext(handle, &fileinfo) == 0);
+	_findclose(handle);
+}
 
-class BBB
-{
-	virtual void fun() {}
-	virtual void fun1() {}
-	virtual void fun2() {}
-
-};
-
-class CCC :public A, public BBB
-{
-	virtual void fun5() {}
-	virtual void fun() {}
-	virtual void print() {}
-	int ff;
-};
 int main()
 {
-	A a1(10,20);
-	A a2(30,40);
-	cout << hex << *(int *)&a1 << endl;
-	cout << hex << *(int *)&a2 << endl;
-	return 0;
-	///*int *p1 = (int *)malloc(sizeof(int) * 10);
-	//for (int i = 0; i < 10; ++i)
-	//	*(p1 + i) = i;
+	vector<string> files;
+	string filepath("F:\\aaa");
+	getfile(filepath, files);
+	string pattern("([[:alnum:]]+)\\.(txt|doc)$");
+	regex r(pattern, regex::icase);
+	string fmt("$1&$2");
+	vector<string> svec(20,"kddddddddddddddddddddddd");
+	string s;
+	auto it = svec.begin();
+	for (int i = 0; i != files.size(); ++i)
+	{
+		//cout<<regex_replace(files[i], r, fmt)<<endl;
+		regex_replace(files[i].begin(),files[i].begin(),files[i].end(), r, fmt);
+	}
+	for (auto &r : files)
+		cout << r << endl;
 
-	//int *p2 = (int *)malloc(sizeof(int) * 10);
-	//for (int i = 0; i < 10; ++i)
-	//	*(p2 + i) = i;*/
-	///*free(p1);*/
+	/*regex r("(ei)", regex::icase);
+	string fmt("EI");
+	string s("kdfjdkeidkfdl");
+	vector<string> svec{ "dkfjkeidklfj","lllleillll","aaaaeiaaaa" };
+	for(int i=0;i!=svec.size();++i)
+	regex_replace(svec[i].begin(), svec[i].begin(), svec[i].end(), r, fmt);
+	for(auto &r:svec)
+	cout << r << endl;*/
+    return 0;
+
+	/*char buf[20];
+	const char *first = "axayaz";
+	const char *last = first + strlen(first);
+	std::regex rx("a");
+	std::string fmt("A");
+	std::regex_constants::match_flag_type fonly =
+		std::regex_constants::format_first_only;
+
+	*std::regex_replace(&buf[0], first, last, rx, fmt) = '\0';
+	std::cout << "replacement == " << &buf[0] << std::endl;
+
+	*std::regex_replace(&buf[0], first, last, rx, fmt, fonly) = '\0';
+	std::cout << "replacement == " << &buf[0] << std::endl;
+
+	std::string str("adaeaf");
+	std::cout << "replacement == "
+		<< std::regex_replace(str, rx, fmt) << std::endl;
+
+	std::cout << "replacement == "
+		<< std::regex_replace(str, rx, fmt, fonly) << std::endl;*/
+	/*return 0;*/
 }
+
