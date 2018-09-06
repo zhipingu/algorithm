@@ -52,7 +52,7 @@ int main()
 	Point *p2 = new Point(2, 2);
 	Point *p3 = new Point(3, 3);
 
-	cout << "已创建的点数是:" << Point::counter << endl;
+	cout << "脪脩麓麓陆篓碌脛碌茫脢媒脢脟:" << Point::counter << endl;
 
 	delete p1;
 	delete p2;
