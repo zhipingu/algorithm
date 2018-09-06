@@ -111,13 +111,13 @@ const class nullptr_tt
 {
 public:
 	template<class T>
-	inline operator T*() const  //��ʽת��
+	inline operator T*() const  //ÒþÊ½×ª»¯
 	{
 		cout <<typeid(T*).name() << endl;
 		return 0;
 	}
 
-	template<class C, class T>  //��ʽת��
+	template<class C, class T>  //ÒþÊ½×ª»¯
 	inline operator T C::*() const
 	{
 		cout << typeid(T C::*).name() << endl;
