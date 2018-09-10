@@ -65,8 +65,8 @@ set ignorecase       " 默认区分大小写
 set ruler                     " 打开状态栏标尺
 set scrolloff=5            " 设定光标离窗口上下边界 5 行时窗口自动滚动
 set shiftwidth=4          " 设定 << 和 >> 命令移动时的宽度为 4
-set softtabstop=2       " 使得按退格键时可以一次删掉 4 个空格,不足 4 个时删掉所有剩下的空格）
-set tabstop=2           " 设定 tab 长度为 4
+set softtabstop=4       " 使得按退格键时可以一次删掉 4 个空格,不足 4 个时删掉所有剩下的空格）
+set tabstop=4           " 设定 tab 长度为 4
 set expandtab
 set wrap                     " 自动换行显示
 syntax enable
