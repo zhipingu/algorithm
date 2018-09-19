@@ -53,5 +53,5 @@ int main()
 {
     int a[]={1,2,1};
     cout<<numberOfScheme(a,sizeof(a)/sizeof(a[0]))<<endl;
-	  return 0;
+	return 0;
 }
