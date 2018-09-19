@@ -1,0 +1,57 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <cstdio>
+using namespace std;
+
+int factorial(int n)
+{
+    int fac=1;
+    for(int i=1;i<=n;++i)
+    {
+        fac *= i;
+    }
+    return fac;
+}
+
+// 递推关系：N[c+1,n1,n2,n3+1]=N(c,n1,n2,n3)*(c+1-2*n3)+2*(N(c-1,n1-1,n2,n3)+N(c-1,n1,n2-1,n3))
+// N(3,1,1,1)=3!;3*2*1
+// a[]中元素都>=0
+
+int numberOfScheme(int a[],int len)
+{
+    int c=0;
+    for(int i=0;i<len;++i)
+        c += a[i];
+    if(c==len)
+        return factorial(len);
+
+    int max_index=0;
+    for(int i=0;i<len;++i)
+    {
+        if(a[i]>a[max_index])
+            max_index=i;
+    }
+
+    a[max_index] -= 1;
+    int result = numberOfScheme(a,len)*(c-2*a[max_index]);
+    for(int i=0;i<len;++i)
+    {
+        if(i != max_index && a[i] > 1)
+        {
+            a[i] -= 1;
+            result += 2*numberOfScheme(a,len);// 是否还要乘C a[i]+1,2, 2是上标，组合数
+            a[i] += 1;
+        }
+    }
+    a[max_index] += 1;
+    return result;
+
+}
+
+int main()
+{
+    int a[]={1,2,1};
+    cout<<numberOfScheme(a,sizeof(a)/sizeof(a[0]))<<endl;
+	  return 0;
+}
