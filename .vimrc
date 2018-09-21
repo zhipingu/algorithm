@@ -158,8 +158,8 @@ endf
 "设置= + - * 前后自动空格
 "设置，后面自动添加空格
 "if exists("g:equ")
-:inoremap = <c-r>=EqualSign('=')<CR>
-:inoremap + <c-r>=EqualSign('+')<CR>
+":inoremap = <c-r>=EqualSign('=')<CR>
+":inoremap + <c-r>=EqualSign('+')<CR>
 "":inoremap - <c-r>=EqualSign('-')<CR>
 "":inoremap * <c-r>=EqualSign('*')<CR>
 "":inoremap / <c-r>=EqualSign('/')<CR>
