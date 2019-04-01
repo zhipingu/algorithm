@@ -1,0 +1,89 @@
+// LRU.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <list>
+#include <iostream>
+#include <string>
+#include <unordered_map>
+
+using namespace std;
+
+class LRU
+{
+public:
+	struct Node
+	{
+		string key;
+		int value;
+		Node(string k,int v):key(k),value(v){}
+	};
+	int capacity;
+	list<Node> data;
+	unordered_map<string, list<Node>::iterator> cacheMap;
+	
+
+public:
+	LRU(int cap) :capacity(cap) {}
+	int get(const string key)
+	{
+		if (cacheMap.find(key) == cacheMap.end())
+			return -1;
+
+		auto tmp = cacheMap.find(key);
+		data.splice(data.begin(), data, tmp->second);
+		// cacheMap[key] = data.begin(); // 不需要更新，因为链表的迭代器不会失效，因为链表的内存块地址没变
+		return tmp->second->value;
+	}
+
+	void set(const string str, int val)
+	{
+		if (cacheMap.find(str) == cacheMap.end())
+		{
+			if (data.size() == capacity)
+			{
+				data.pop_back();
+			}
+			data.push_front(Node(str, val));
+			cacheMap.insert({ str,data.begin() });
+		}
+		else
+		{
+			cacheMap[str]->value = val;
+			data.splice(data.begin(), data, cacheMap[str]);
+			// cacheMap[str] = data.begin(); // 不需要更新，因为链表的迭代器不会失效，因为链表的内存块地址没变
+		}
+		
+	}
+	void print()
+	{
+		for (auto r : data)
+		{
+			cout<<r.key<<" "<<r.value<<endl;
+		}
+	}
+};
+
+
+
+int main()
+{
+	vector<string> svec{ "abc","def","ghi","mnq","pqk","dkf" };
+	LRU cache(6);
+	for (int i = 0; i < svec.size(); ++i)
+	{
+		cache.set(svec[i], i*i);
+	}
+
+	cache.print();
+	cout << "---------" << endl;
+	cache.set("mnq", 5000);
+	cout << cache.get("mnq") << endl;
+	cout << cache.get("def") << endl;
+	cout << "---------" << endl;
+	cache.print();
+
+
+    return 0;
+}
+
