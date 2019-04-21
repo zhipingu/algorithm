@@ -1,0 +1,69 @@
+// N个小于10的非负整数，只能相邻交换K次使得它们的排列最大
+// int a[]={0,1,3,2} k=1 max=1032
+// int a[]={0,1,3,2} k=2 max=3012
+
+#include <iostream>
+
+using namespace std;
+
+void Max(int a[], int len, int k)
+{
+	
+	//已经交换次数
+	int stepnum = 0;
+	//记录已经做过交换的最大位数下标的下一位（当前要决定的最高位）
+	int num1 = 0;
+	while (true)
+	{
+
+		int manum = 0;
+		int i = 0;
+		// 每次找最大数需要交换的次数
+		int cnt = 0;
+		//找寻数组中距离最高位<=k-stepnum步的最大数
+		for (int n = num1; n <= k - stepnum + num1 && n < len; n++)
+		{
+			if (a[n] > manum)
+			{
+				manum = a[n];
+				cnt=n-num1;
+				i = n;
+			}
+		}
+		stepnum += cnt;
+		//交换位置
+		
+		for (int j = i-1; j >= num1; j--)
+		{
+			a[j + 1] = a[j];
+		}
+		a[num1] = manum;
+		if (stepnum >= k)
+			break;
+		num1++;
+	}
+}
+int main()
+{
+	int len;
+	cin >> len;
+	int *a = new int[len]();
+	for (int i = 0; i < len; i++)
+	{
+		cin >> a[i];
+	}
+	int k;
+	cin >> k;
+	
+	Max(a, len, k);
+	for (int i = 0; i<len; i++)
+	{
+		cout << a[i];
+	}
+	
+
+	return 0;
+}
+
+
+
