@@ -31,6 +31,7 @@ public:
 			return -1;
 
 		auto tmp = cacheMap.find(key);
+		// data.splice(data.begin(), data, cacheMap[key]);
 		data.splice(data.begin(), data, tmp->second);
 		// cacheMap[key] = data.begin(); // 不需要更新，因为链表的迭代器不会失效，因为链表的内存块地址没变
 		return tmp->second->value;
@@ -42,6 +43,7 @@ public:
 		{
 			if (data.size() == capacity)
 			{
+				cacheMap.erase(data.back().key);
 				data.pop_back();
 			}
 			data.push_front(Node(str, val));
